@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <!-- Link Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div data-aos="fade-up"  data-aos-duration="1500" class="max-w-md mx-auto bg-gray-300 rounded-xl shadow-md overflow-hidden md:max-w-2xl p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Cuaca Hari ini</h1>
+
+        <!-- Form Input Kota -->
+        <form action="/weather" method="get" class="mb-6">
+            <label for="city" class="block text-lg font-medium text-gray-700">Enter City Name:</label>
+            <input type="text" id="city" name="city" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+            <button type="submit" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-700">Search</button>
+        </form>
+
+        <!-- Menampilkan Data Cuaca Jika Ada -->
+        {{if .Name}}
+        <div class="max-w-md p-8 mx-auto rounded-lg dark:bg-gray-50 dark:text-gray-800">
+            <div class="flex justify-between space-x-8">
+                <div class="flex flex-col items-center">
+                    <!-- Menampilkan Ikon Cuaca -->
+                    <img src="http://openweathermap.org/img/wn/{{(index .Weather 0).Icon}}@2x.png" alt="Weather Icon" class="w-29 h-25 p-2 dark:text-yellow-600 fill-current">
+                    <h1 class="text-xl font-semibold">{{.Name}}</h1>
+                    <h2 class="text-xl font-semibold mb-4">{{.Date}}</h2>
+                </div>
+                <span class="font-bold text-8xl">{{.Main.Temp}}°C</span>
+            </div>
+            <div class="flex justify-between mt-8 space-x-4 dark:text-gray-600">
+                <div class="flex flex-col items-center space-y-1">
+                    <p class="text-lg">Humidity: <span class="font-bold">{{.Main.Humidity}}%</span></p>
+                </div>
+                <div class="flex flex-col items-center space-y-1">
+                    <p class="text-lg">Condition: <span class="font-bold">{{(index .Weather 0).Description}}</span></p>
+                </div>
+            </div>
+        </div>        
+        {{end}}
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+</body>
+</html>
+
